@@ -1,0 +1,9 @@
+{
+  "name": "fojuth/mrshuttle",
+  "autoload": {
+    "psr-4": {
+      "MrShuttle\\": "src/"
+    }
+  },
+  "minimum-stability": "dev"
+}
