@@ -1,5 +1,6 @@
 <?php
 
+use MrShuttle\Connection\Factory;
 use MrShuttle\Input\Parser;
 
 require 'vendor/autoload.php';
@@ -7,11 +8,15 @@ require 'vendor/autoload.php';
 $source_file = 'confCons.xml';
 
 $parser = new Parser($source_file);
+$connectionFactory = new Factory();
 
-$parser->getParsed();
+$connections = $connectionFactory->getConnections($parser->getParsed());
 
-var_dump('yay');
-die;
+foreach ($connections as $c) {
+  var_dump($c->getName());
+  var_dump($c->getPath());
+}
+
 
 //$pwd = '28kQ15DF4kdW34Mx2+fh+NWZODNSoSPek7ug+ILvyPE=';
 //$key = '\xc8\xa3\x9d\xe2\xa5\x47\x66\xa0\xda\x87\x5f\x79\xaa\xf1\xaa\x8c';
