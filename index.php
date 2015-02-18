@@ -2,6 +2,8 @@
 
 use MrShuttle\Connection\Factory;
 use MrShuttle\Input\Parser;
+use MrShuttle\Output\Builder;
+use MrShuttle\Output\JsonFormatter;
 
 require 'vendor/autoload.php';
 
@@ -12,10 +14,23 @@ $connectionFactory = new Factory();
 
 $connections = $connectionFactory->getConnections($parser->getParsed());
 
-foreach ($connections as $c) {
-  var_dump($c->getName());
-  var_dump($c->getPath());
-}
+$builder = new Builder($connections);
+
+//foreach ($connections as $c) {
+//  var_dump($c->getName());
+//  var_dump(join(' / ', $c->getPath(1)));
+//}
+
+$hosts = $builder->getHosts();
+
+$formatter = new JsonFormatter();
+
+ob_start();
+echo $formatter->format(json_encode($hosts), true, true);
+file_put_contents('__dump.html', ob_get_clean(), FILE_APPEND);
+
+var_dump($hosts);
+die;
 
 
 //$pwd = '28kQ15DF4kdW34Mx2+fh+NWZODNSoSPek7ug+ILvyPE=';

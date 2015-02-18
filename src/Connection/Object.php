@@ -16,8 +16,8 @@ class Object
     $this->rootPath = $rootPath;
   }
 
-  public function getPath(){
-    return join(' -> ', $this->rootPath);
+  public function getPath($startFromLevel = 0){
+    return array_slice($this->rootPath, $startFromLevel);
   }
 
   public function getName(){
