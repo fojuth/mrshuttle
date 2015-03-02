@@ -18,7 +18,7 @@ class Builder
     $hosts = array();
 
     foreach ($this->connections as $connection) {
-      $path = $connection->getPath(1);
+      $path = $connection->getPath(3);
 
       $this->setPath($path, $hosts, $connection);
     }
@@ -27,21 +27,14 @@ class Builder
   }
 
   protected function setPath($path, &$hosts, $connection){
-    $h =& $hosts;
-    foreach ($path as $p) {
-      if (false === isset($h[$p])) {
-        $h[$p] = array();
-      }
+    $fullPath = array_merge($path, array($connection->getName()));
 
-      $h =& $h[$p];
-    }
-
-    $h[] = array(
-      'name' => $connection->getName(),
-      'cmd' => '???',
+    $hosts[] = array(
+      'name' => join(' / ', $fullPath),
+      'cmd' => $connection->getCommand(),
     );
 
-    return $h;
+    return $hosts;
   }
 
 }
