@@ -13,6 +13,18 @@ $source_file = 'confCons.xml';
 $parser = new Parser($source_file);
 $connectionFactory = new Factory();
 
+$sshKey = null;
+
+foreach ($argv as $index => $arg) {
+  if ('-i' === $arg) {
+    $sshKey = $argv[$index + 1];
+  }
+}
+
+if (false === empty($sshKey)) {
+  $connectionFactory->setKeyPath($sshKey);
+}
+
 $connections = $connectionFactory->getConnections($parser->getParsed());
 
 $builder = new Builder($connections);

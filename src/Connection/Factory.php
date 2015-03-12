@@ -2,11 +2,19 @@
 
 class Factory {
 
+  protected $sshKeyPath;
+
   public function getConnections($connectionNodes){
     $objects = array();
 
     foreach ($connectionNodes as $node) {
-      $objects[] = new Object($node, $this->getPath($node));
+      $object = new Object($node, $this->getPath($node));
+
+      if (false === empty($this->sshKeyPath)) {
+        $object->setIdentityFile($this->sshKeyPath);
+      }
+
+      $objects[] = $object;
     }
 
     return $objects;
@@ -23,6 +31,12 @@ class Factory {
     }
 
     return array_reverse($path);
+  }
+
+  public function setKeyPath($keyPath){
+    $this->sshKeyPath = $keyPath;
+
+    return $this;
   }
 
 }

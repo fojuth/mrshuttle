@@ -12,6 +12,8 @@ class Object
 
   private $attributes;
 
+  private $identityFile;
+
   public function __construct($node, array $rootPath)
   {
     $this->node = $node;
@@ -67,7 +69,17 @@ class Object
       $command[] = '-p '.$port;
     }
 
+    if (false === empty($this->identityFile)) {
+      $command[] = '-i '.$this->identityFile;
+    }
+
     return join(' ', $command);
+  }
+
+  public function setIdentityFile($identityFile){
+    $this->identityFile = $identityFile;
+
+    return $this;
   }
 
 }
